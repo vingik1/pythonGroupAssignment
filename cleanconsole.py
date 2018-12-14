@@ -1,5 +1,5 @@
 import argparse
-from testfileforargsandgui import testfunction
+from clean import clean
 
 parser = argparse.ArgumentParser(description='Should clean up most of your ' \
                         'downloads folder and put it into an output folder. \n'\
@@ -36,7 +36,7 @@ args = parser.parse_args()
 
 
 
-testfunction(args.input, args.output, args.verbose, args.nforemove, args.removeempty, args.disabletrust, False)
+clean(args.input, args.output, args.verbose, args.nforemove, args.removeempty, args.disabletrust, False)
 
 # print(type(args.input))
 # print(args.output)
