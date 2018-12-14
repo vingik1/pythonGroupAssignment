@@ -8,12 +8,12 @@ from tkinter import Button
 from tkinter import Checkbutton
 from tkinter import Label
 from tkinter.constants import NW, N, W, E, SW, NSEW, INSERT, DISABLED, END
+from clean import clean
 import os
 from tkinter.scrolledtext import ScrolledText
 from threading import Thread
 import time
 root = Tk()
-from clean import clean
 root.title('Download Folder Cleaner ATTATCHED!!!')
 
 #center gui on screen
@@ -71,20 +71,20 @@ outputbutton.grid(row=2, column=0, padx=5, pady=5)
 # option to see whats happening under the hood
 root.verbose = BooleanVar()
 root.verbose.set(False) 
-verbosebox = Checkbutton(root, text='Verbose mode (recommended on fyrst run)',\
+verbosebox = Checkbutton(root, text='Verbose mode ! works to some extent, will be more definite when most debugging is over)',\
                             var=root.verbose)
 verbosebox.grid(row=3, column=1, columnspan=2, sticky=NW)
 
 # Option to remove empty directories left behind
 root.remove_empty = BooleanVar()
 root.remove_empty.set(False)  # set check state
-remove_empty_box = Checkbutton(root, text='Delete empty folders (inactive)',\
+remove_empty_box = Checkbutton(root, text='Delete empty folders !!! NOT IMPLEMENTED',\
                             var=root.remove_empty)
 remove_empty_box.grid(row=4 , column=1, sticky=NW)
 # Option to delete nfos from directories
 root.nfo_remove = BooleanVar()
 root.nfo_remove.set(False)  # set check state
-nfo_remove_box = Checkbutton(root, text='Delete NFO files (inactive)',\
+nfo_remove_box = Checkbutton(root, text='Delete NFO files !!! NOT IMPLEMENTED',\
                             var=root.nfo_remove)
 nfo_remove_box.grid(row=5 , column=1, columnspan=2, sticky=NW)
 
@@ -92,7 +92,7 @@ nfo_remove_box.grid(row=5 , column=1, columnspan=2, sticky=NW)
 root.trust = BooleanVar()
 root.trust.set(True)  # set check state
 trust_box = Checkbutton(root, text='Trust mode - Disabling this will allow '\
-                                    'you to manually name your files',\
+                                    'you to manually name your files !!! NOT IMPLEMENTED',\
                                     var=root.trust)
 trust_box.grid(row=6 , column=1, columnspan=2, sticky=NW)
 

@@ -25,7 +25,7 @@ parser.add_argument('-n', '--nforemove', action='store_true', default=False,\
                     'moved, this might cause the "remove empty files" '\
                     'option to leave behind a load of folders containing '\
                     'only these useless NFO files')
-parser.add_argument('-d', '--disabletrust', action='store_true', default=False,\
+parser.add_argument('-d', '--disabletrust', action='store_false', default=True,\
                     help='Disables "trust mode" prompting you to rename your'\
                     'files. With a lot of files this'\
                     ' could cause you to be promted to rename a LOT of files.'\
