@@ -3,7 +3,7 @@ from pathlib import Path
 import os
 import re
 
-def createInsert(pattern, filename, file_path, target):
+def createInsert(pattern, filename, file_path, outputfile):
     #if there is no pattern add the file to a directory called unsorted
     if pattern == "":
         #split on the first slash to get the path
@@ -12,12 +12,12 @@ def createInsert(pattern, filename, file_path, target):
         try:
             # creates a folder so as to reduce the manual work that the user
             #might be subjected to 
-            Path(target+"\\Unsorted\\"+folder_path).parent.mkdir(parents=True,exist_ok=True)
+            Path(outputfile+"\\Unsorted\\"+folder_path).parent.mkdir(parents=True,exist_ok=True)
         except:
             print("'"+filename+"' already exists. skip Creation")
         try:
-            #shutil.move(file_path,Path(target+"\\Unsorted\\"+folder_path+"\\"))
-            shutil.copy(file_path,Path(target+"\\Unsorted\\"+folder_path))
+            #shutil.move(file_path,Path(outputfile+"\\Unsorted\\"+folder_path+"\\"))
+            shutil.copy(file_path,Path(outputfile+"\\Unsorted\\"+folder_path))
         except:
             print(str(file_path)+" Was not found")
         return
@@ -65,35 +65,35 @@ def createInsert(pattern, filename, file_path, target):
     
     try:
         #býr til folder með nafninu á folderinu !!!þarf að laga !!!!!
-        Path(target+"\\"+series_name).mkdir()
+        Path(outputfile+"\\"+series_name).mkdir()
     except:
         #lets you know if it already exists
         print("'"+series_name+"' already exists. skip Creation!")
     try: 
         #creates season 01 etc depending on the name of the file
-        Path(target+"\\"+series_name+"\\Season "+season).mkdir()
+        Path(outputfile+"\\"+series_name+"\\Season "+season).mkdir()
     except:
         print("'"+series_name+"\\Season "+season+"' already exists. skip Creation!")
     try:
-        #shutil.move(file_path,Path(target+"\\"+series_name+"\\Season "+season+"\\"))
-        shutil.copy(file_path,Path(target+"\\"+series_name+"\\Season "+season))
+        #shutil.move(file_path,Path(outputfile+"\\"+series_name+"\\Season "+season+"\\"))
+        shutil.copy(file_path,Path(outputfile+"\\"+series_name+"\\Season "+season))
     except:
         print(str(file_path)+" Was not found")
     return 'success'
 
 
-def clean(downloads, target):
+def clean(inputfile, outputfile, verbose, nfo, removeempty, trust, gui):
     try:
         #creates a directory with the given name if not tell user that it 
         # already exists
-        Path(target).mkdir()
+        Path(outputfile).mkdir()
     except:
-        print(target+" already exists")
+        print(outputfile+" already exists")
     path_lis = []
     file_lis = []
     exts = ['*.avi','*.mkv', '*.mp4','*.srt']
     for i in exts:
-        path_lis.extend(Path(downloads).glob("**/"+i))
+        path_lis.extend(Path(inputfile).glob("**/"+i))
     for path in path_lis:
         file_lis.append(os.path.basename(path))
         print(path)
@@ -106,24 +106,24 @@ def clean(downloads, target):
 
         #searches for pattern with s04e04, s1e02, s1 e02 , s01 e 03 or 01 E01 
         if re.search("[sS]{0,1}\d{1,2}[ ]{0,1}[eE][ ]{0,1}\d{2}", name):
-            createInsert("[sS]{0,1}\d{1,2}[ ]{0,1}[eE][ ]{0,1}\d{2}", name, path_lis[i], target)
+            createInsert("[sS]{0,1}\d{1,2}[ ]{0,1}[eE][ ]{0,1}\d{2}", name, path_lis[i], outputfile)
 
         #searches for pattern with [1 12], [12x31] or 12x01 and then removes the
         #brackets for ease of naming in createInsert function
         elif re.search("\s[\[]{0,1}\d{1,2}[(x| )]\d{1,2}[\]]{0,1}\s", name):
             name = re.sub("\[|\]",'',name)
-            createInsert("\d{1,2}[(x| )]\d{1,2}\s", name, path_lis[i], target)
+            createInsert("\d{1,2}[(x| )]\d{1,2}\s", name, path_lis[i], outputfile)
         
         # matches a pattern 501.avi, Friends 312 - the one where monica blab.avi
         elif re.search("( |^)\d{3}([.| ])",name):
-            createInsert("( |^)\d{3}([.| ])",name, path_lis[i], target)
+            createInsert("( |^)\d{3}([.| ])",name, path_lis[i], outputfile)
         
         #use an empty pattern to the notify createInsert function to add the file
         # to unsorted folder
         else:
-            createInsert("", name, path_lis[i], target)
+            createInsert("", name, path_lis[i], outputfile)
     return 'success'
-print(clean('C:\\Users\\vingi\\Documents\\downloads','C:\\Users\\vingi\\Documents\\fuckit3'))
-
+#print(clean('C:\\Users\\vingi\\Documents\\downloads','C:\\Users\\vingi\\Documents\\fuckit3'))
+#print(clean('../../downloads','../../episodes', False, False, False, False, False))
 
 #\d{3}[.| |a-b]
