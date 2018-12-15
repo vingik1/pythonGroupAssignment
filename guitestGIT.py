@@ -115,6 +115,8 @@ def start_process_button():
         t1 = Thread(target=clean, args=(str(root.inputpath), str(root.outputpath),\
             root.verbose.get(), root.nfo_remove.get(),\
             root.remove_empty.get(), root.trust.get(), True))
+        root.config(cursor="pirate")
+        root.update()
         t1.start()
         #in verbose mode the textbox is constantly showing the stream
         #out of verbose it will show a 'Working' and add dots to the screem
@@ -134,6 +136,8 @@ def start_process_button():
                 textbox.see(END)
         textbox.insert(INSERT, '\nAll done!!! :D ')
         #Sets the textbox to see the bottom where all the new stuff is 
+        root.config(cursor="")
+        root.update()
         textbox.see('end')
         startbtn.config(text='Finished!')
     else:
